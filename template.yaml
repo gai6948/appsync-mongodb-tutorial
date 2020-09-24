@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  appsync-demo
+
+  Sample SAM Template for appsync-demo
+  
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  AppSyncMovieResolver:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: hello-world/
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          MONGODB_USER: <your_mongodb_user_here>
+          MONGODB_PASSWORD: <your_mongodb_password_here>
+
+Outputs:
+  AppSyncMovieResolver:
+    Description: "AppSync Resolver Lambda Function ARN"
+    Value: !GetAtt AppSyncMovieResolver.Arn
+  AppSyncMovieResolverIamRole:
+    Description: "Implicit IAM Role created for AppSync Resolver function"
+    Value: !GetAtt AppSyncMovieResolverRole.Arn
